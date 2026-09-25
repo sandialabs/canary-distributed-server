@@ -1,13 +1,13 @@
 [project]
 name = "canary-distributed-server"
 description = "server for canary-distributed package"
-version = "0.5"
+version = "26.9.25"
 readme = "README.md"
 dependencies = ["schema", "fastapi", "pydantic", "uvicorn", "pyyaml"]
 requires-python = ">=3.10"
 
 [project.optional-dependencies]
-dev = ["ruff", "ty", "pytest", "httpx2"]
+dev = ["ruff", "ty", "pytest", "httpx2", "bandit"]
 
 [project.scripts]
 canary-dist-server = "canary_distributed_server:main"
@@ -69,3 +69,17 @@ split-on-trailing-comma = false
 force-single-line = true
 known-first-party = ["performance_dashboard"]
 section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+[tool.bandit]
+skips = [
+    "B101",  # ignore asserts
+    "B311",  # ignore warnings about random numbers
+    "B318",  # xml.dom.minidom.parse to parse XML
+    "B324",  # non-cryptographic hashes allowed (they are used to generate IDs only)
+    "B404",  # consider security risks when using subprocess module
+    "B406",  # xml.sax.saxutils to parse XML
+    "B408",  # allow use of xml parsers
+    "B603",
+    "B607", # start_process_with_partial_path"
+]
+exclude_dirs = ["src/canary/docs/examples", "src/canary/docs/lib/python/sphinxext"]
