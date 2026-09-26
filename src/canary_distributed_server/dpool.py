@@ -183,7 +183,7 @@ class DistributedResourcePool:
             pool = pools[host] = MachineResourcePool(machine["resources"])
             try:
                 acquired = pool.checkout(request)
-            except Exception:
+            except Exception:  # nosec B112
                 continue
             else:
                 score = pool.score(acquired)
