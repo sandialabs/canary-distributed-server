@@ -67,7 +67,7 @@ select = ["F", "I"]
 [tool.ruff.lint.isort]
 split-on-trailing-comma = false
 force-single-line = true
-known-first-party = ["performance_dashboard"]
+known-first-party = ["canary", "canary_distributed_server"]
 section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
 
 [tool.bandit]
