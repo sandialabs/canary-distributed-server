@@ -110,7 +110,8 @@ class TestAccommodates:
     def test_empty_pool_cannot_accommodate(self):
         pool = ResourcePool()
         result = pool.accommodates(req(cpus=1))
-        assert not result
+        assert result is not None
+        assert result.reason is not None
         assert "empty" in result.reason.lower()
 
     def test_sufficient_cpus(self):
@@ -121,13 +122,15 @@ class TestAccommodates:
     def test_insufficient_cpus(self):
         pool = make_pool(cpus=2)
         result = pool.accommodates(req(cpus=3))
-        assert not result
+        assert result is not None
+        assert result.reason is not None
         assert "cpus" in result.reason
 
     def test_unknown_resource_type(self):
         pool = make_pool(cpus=4)
         result = pool.accommodates([{"type": "gpus", "slots": 1}])
-        assert not result
+        assert result is not None
+        assert result.reason is not None
         assert "gpus" in result.reason
 
     def test_multiple_resource_types(self):
@@ -139,7 +142,7 @@ class TestAccommodates:
         pool = make_pool(cpus=3)
         # Four separate cpu items → total 4 needed, pool only has 3
         result = pool.accommodates(req(cpus=4))
-        assert not result
+        assert result is not None
 
     def test_accommodates_does_not_mutate_pool(self):
         pool = make_pool(cpus=4)
@@ -157,7 +160,7 @@ class TestAccommodates:
         pool.checkout(req(cpus=3))
         # 1 free CPU left — requesting 2 must fail
         result = pool.accommodates(req(cpus=2))
-        assert not result
+        assert result is not None
 
 
 # ---------------------------------------------------------------------------

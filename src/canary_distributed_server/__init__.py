@@ -83,9 +83,9 @@ def main():
 
 
 class Command:
-    name = None
-    description = None
-    endpoint = None
+    name: str | None = None
+    description: str | None = None
+    endpoint: str | None = None
 
     def __init__(self, args: argparse.Namespace) -> None:
         base_url = args.server_url
